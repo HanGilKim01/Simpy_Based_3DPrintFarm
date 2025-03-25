@@ -49,6 +49,7 @@ def run_customer_simulation(seed=None):
 
     # Start time measurement
     start_time = time.time()
+    #time.time()을 사용하여 시뮬레이션 실행 전후의 실제 시간 차이를 측정합니다.
 
     # Run simulation
     env.run(until=SIM_TIME)
