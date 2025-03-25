@@ -24,12 +24,15 @@ class Manager(OrderReceiver):
 
         # Create and connect manufacturing processes
         self.setup_processes()
+        #self.setup_processes()를 호출하여 제조 공정(예: Build, Wash, Dry 등)을 생성하고 연결하는 초기화 작업을 수행합니다.
+        #이후에 self.completed_orders를 빈 리스트로 초기화하여, 완료된 주문들을 저장할 공간을 마련합니다.
 
         # Tracking completed jobs and orders
         self.completed_orders = []
 
         # When calling setup_processes, the manager (self) itself is also passed as an argument
         self.setup_processes(manager=self)
+        #이는 공정 설정 과정에서 Manager 객체를 필요로 하거나, 공정들 사이의 상호 연결을 위해 Manager를 참조하도록 설계되었음을 의미합니다.
 
     def setup_processes(self, manager=None):
         """Create and connect all manufacturing processes"""
@@ -148,18 +151,21 @@ class Manager(OrderReceiver):
         stats = {}
 
         # Completed jobs per process
+        # 각 공정(빌드, 워시, 드라이, 인스펙트)의 completed_jobs 리스트의 길이를 계산하여, 해당 공정에서 완료된 작업의 총 개수를 저장합니다.
         stats['build_completed'] = len(self.proc_build.completed_jobs)
         stats['wash_completed'] = len(self.proc_wash.completed_jobs)
         stats['dry_completed'] = len(self.proc_dry.completed_jobs)
         stats['inspect_completed'] = len(self.proc_inspect.completed_jobs)
 
         # Queue sizes
+        # 각 공정의 작업 큐(JobStore)의 크기(size 프로퍼티)를 조회하여, 현재 대기 중인 작업의 수를 저장합니다.
         stats['build_queue'] = self.proc_build.job_store.size
         stats['wash_queue'] = self.proc_wash.job_store.size
         stats['dry_queue'] = self.proc_dry.job_store.size
         stats['inspect_queue'] = self.proc_inspect.job_store.size
 
         # Defective items
+        # 검사(Inspect) 공정에서 관리되는 불량 항목 리스트(defective_items)의 길이를 계산하여, 현재 남아있는 불량 항목의 수를 저장합니다.
         stats['defective_items'] = len(self.proc_inspect.defective_items)
 
         return stats
