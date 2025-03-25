@@ -23,3 +23,46 @@ Every parameters in config_SimPy.py
 * POLICY_ORDER_TO_JOB : Policy for dividing orders into jobs: "EQUAL_SPLIT" or "MAX_PER_JOB"
 * CUST_ORDER_CYCLE : Customer order cycle (1 week in minutes)
 * ORDER_DUE_DATE : Order due date (1 week in minutes)
+
+# base_Customer
+* It deals with classes related to Customer
+* Defines properties for Item, Patient, and Order. Create an order and assign that order
+
+# base_Job
+* Defines the properties of the job that are applied to the manufacturing process
+
+# base_Process
+* Define a large framework for the overall flow of the manufacturing process. The framework defined in that class is inherited to certain processes
+* Define the connection function between processes, the processor registration function, and build a seize/delay/release process to implement the entire process.
+
+# base_Processor
+* It deals with processors (workers, machines), which are the resources of the process.
+* Defines each attribute, and defines whether the processor starts and uses the task.
+
+# config_SimPy
+* It contains all parameters for the operation of the process.
+* It is defined for the number of machines and workers, capacity, and processing time.
+
+# log_SimPy
+* 
+
+# main_Customer
+* File for functional verification and validation of Customer part
+
+# main_Process
+* File for functional verification and validation of process part
+
+# main_SimPy
+* Proceed with the simulation for a predetermined period of time and record the results
+* Sets random seeds for reproducibility
+
+# manager
+* control the manufacturing processes and track orders
+* Divide the job to be done in the process, and collect the defects that occurred in the process to proceed with the rework
+
+# specialized_Process
+* Define detailed properties for the Build, Wash, Dry, Inspection process
+* Organize the manner and probability of defects occurring during the Build process
+
+# specialized_Processor
+* Additional properties are defined for processors, which are workers and machines
