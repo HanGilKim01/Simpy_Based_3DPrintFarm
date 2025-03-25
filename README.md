@@ -10,4 +10,16 @@ SimPy-based Inventory Management Simultaion
 
 # How to set parameters
 Every parameters in config_SimPy.py
-* 
+* SIM_TIME : Simulation time settings (unit : minutes)
+* PALLET_SIZE_LIMIT : Maximum items in one pallet
+* PROC_TIME_BUILD/WASH/DRY/INSPECT : Process time for build, wash, dry, inspect (unit :minutes)
+* NUM_MACHINES_BUILD/WASH/DRY : Number of 3d print machines, wash machines, dry machines
+* CAPACITY_MACHINE_BUILD/WASH/DRY : Job capacity for build, wash, dry machines
+* DEFECT_RATE_PROC_BUILD : defect rate in build process
+* NUM_WORKERS_IN_INSPECT : Number of workers in inspection process
+* POLICY_NUM_DEFECT_PER_JOB : Number of defective items to collect for rework
+* POLICY_REPROC_SEQ_IN_QUEUE : Policy for placing rework jobs in queue
+* POLICY_DISPATCH_FROM_QUEUE : Policy for extracting jobs from queue
+* POLICY_ORDER_TO_JOB : Policy for dividing orders into jobs: "EQUAL_SPLIT" or "MAX_PER_JOB"
+* CUST_ORDER_CYCLE : Customer order cycle (1 week in minutes)
+* ORDER_DUE_DATE : Order due date (1 week in minutes)
