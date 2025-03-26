@@ -44,15 +44,6 @@ classDiagram
     + send_order()
     }
 
-    class OrderReceiver {
-    + receive_order()
-    }
-
-    class SimpleOrderReceiver {
-    + env : simpy.environment
-    + logger : list
-    + received_orders : list
-    }
 
     class Job {
     + id_job : int
@@ -195,6 +186,27 @@ classDiagram
     }
 
     %% 관계 표현
-    Customer --> Job : creates
-    Job o-- Item : contains
+    Process <|-- Proc_Build : Inheritance
+    Process <|-- Proc_Wash : Inheritance
+    Process <|-- Proc_Dry : Inheritance
+    Process <|-- Proc_Inspect : Inheritance
+    Item --> Patient : contain
+    Patient --> Order : contain
+    Customer --> Order : generate
+    Customer --> Manager : send order
+    Manager --> Job : Split Order into Job
+    Manager --> JobStore : send Job list
+    Manager --> Process : start process
+    Process --> JobStore : get Job list
+    Manager --> Proc_Build : create job for defects
+    ProcessorResource --> Proc_Build : offer resource
+    ProcessorResource --> Proc_Wash : offer resource
+    ProcessorResource --> Proc_Dry : offer resource
+    ProcessorResource --> Proc_Inspect : offer resource
+    Worker --> ProcessorResource : contain
+    Machine --> ProcessorResource : contain
+    Worker_Inspect --|> Worker : Inheritance
+    Mach_3DPrint --|> Machine : Inheritance
+    Mach_Wash --|> Machine : Inheritance
+    Mach_Dry --|> Machine : Inheritance
     
