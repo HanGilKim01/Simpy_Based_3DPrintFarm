@@ -44,7 +44,8 @@ Every parameters in config_SimPy.py
 * It is defined for the number of machines and workers, capacity, and processing time.
 
 # log_SimPy
-* 
+* Implement the entire log history of the simulation.
+* It contains an overall statistics comprehensive and Gantchart implementation.
 
 # main_Customer
 * File for functional verification and validation of Customer part
