@@ -190,20 +190,27 @@ classDiagram
     Process <|-- Proc_Wash : Inheritance
     Process <|-- Proc_Dry : Inheritance
     Process <|-- Proc_Inspect : Inheritance
+
     Item --> Patient : contain
     Patient --> Order : contain
+
     Customer --> Order : generate
     Customer --> Manager : send order
+
     Manager --> Job : Split Order into Job
     Manager --> JobStore : send Job list
-    Process --> JobStore : get Job list
     Manager --> Proc_Build : create job for defects
+
+    Process --> JobStore : get Job list
+
     ProcessorResource --> Proc_Build : offer resource
     ProcessorResource --> Proc_Wash : offer resource
     ProcessorResource --> Proc_Dry : offer resource
     ProcessorResource --> Proc_Inspect : offer resource
+
     Worker --> ProcessorResource : contain
     Machine --> ProcessorResource : contain
+
     Worker_Inspect --|> Worker : Inheritance
     Mach_3DPrint --|> Machine : Inheritance
     Mach_Wash --|> Machine : Inheritance
