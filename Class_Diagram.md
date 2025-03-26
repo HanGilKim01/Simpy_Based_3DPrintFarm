@@ -196,7 +196,6 @@ classDiagram
     Customer --> Manager : send order
     Manager --> Job : Split Order into Job
     Manager --> JobStore : send Job list
-    Manager --> Process : start process
     Process --> JobStore : get Job list
     Manager --> Proc_Build : create job for defects
     ProcessorResource --> Proc_Build : offer resource
