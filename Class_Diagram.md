@@ -1,114 +1,200 @@
 ```mermaid
 classDiagram
     
+    class Item {
+    + id_order : int
+    + id_patient : int
+    + id_item : int
+    + type_item : "aligner"
+    + is_completed : bool
+    + is_defect : bool
+    }
+
+    class Patient {
+    + id_order : int
+    + id_patient : int
+    + num_items : int
+    + list_items : list
+    + is_completed : bool
+    + item_counter : int
+    + _create_items_for_patient(id_order, id_patient, num_items)
+    + _get_next_item_id()
+    + check_completion()
+    }
+
+    class Order {
+    + id_order : int
+    + num_patients : int
+    + list_patients : list
+    + due_date : int
+    + time_start : None
+    + time_end : None
+    + patient_counter : int
+    + _create_patients_for_order(id_order, num_patients)
+    + _get_next_patient_id()
+    + check_completion()
+    }
+    
     class Customer {
-      + env: simpy.Environment
-      + daily_events: list
-      + item_id : int
-      + job_id : int
-      + printer_queue : queue
-      + temp_job_list: list
-      + interval : int
-      + create_jobs()
+    + env : simpy.environment
+    + logger : list
+    + order_counter : int
+    + get_next_order_id()
+    + create_order()
+    + send_order()
+    }
+
+    class OrderReceiver {
+    + receive_order()
+    }
+
+    class SimpleOrderReceiver {
+    + env : simpy.environment
+    + logger : list
+    + received_orders : list
     }
 
     class Job {
-      + job_id: int
-      + items: list
-      + create_time : int
+    + id_job : int
+    + workstation : dict
+    + list_items : list
+    + time_processing_start : None
+    + time_processing_end : None
+    + time_waiting_start : None
+    + time_waiting_end : None
+    + is_reprocess : bool
+    + processing_history : list
     }
 
-    class Item {
-      + env: simpy.Environment
-      + item_id: int
-      + job_id: int
-      + volume: int
+    class JobStore {
+    + name : str
+    + queue_length_history : list
+    + put(item)
+    + get()
+    + is_empty()
+    + size()
     }
 
+    class Process {
+    + name_process : str
+    + env : simpy.environment
+    + logger : list
+    + list_processors : list
+    + job_store : JobStore()
+    + processor_resources : dict
+    + complted_jobs : list
+    + next_process : None
+    + resource_trigger : env.event()
+    + job_added_trigger : env.event()
+    + process : env.process()
+    + connect_to_next_process(next_process)
+    + register_processor(processor)
+    + add_to_queue(job)
+    + run()
+    + seize_resources()
+    + delay_resources(processor_resource, jobs)
+    + release_resources(processor_resource, request)
+    + create_process_step(job, processor_resource)
+    + send_job_to_next(job)
+    }
+
+    class Worker {
+    + type_processor : str
+    + id_worker : int
+    + name_worker : str
+    + available_status : bool
+    + working_job : None
+    + processing_time : int
+    + busy_time : int
+    + last_status_change : int
+    }
+
+    class Machine {
+    + type_processor : str
+    + id_machine : int
+    + name_process : str
+    + name_machine : str
+    + available_status : bool
+    + list_working_job : list
+    + capacity_jobs : int
+    + processing_time : int
+    + busy_time : int
+    + last_status_change : int
+    + allows_job_addition_during_processing : bool
+    }
+
+    class ProcessorResource {
+    + processor_type : str
+    + capacity : int
+    + id : int
+    + name : str
+    + allows_job_addition_during_processing : bool
+    + current_job : bool
+    + current_jobs : list
+    + processing_time : int
+    + processing_started : bool
+    + request(*args, **kwargs)
+    + release(request)
+    + is_available()
+    + start_job(job)
+    + get_jobs()
+    + finish_jobs()
+    }
+
+    class Logger {
+    + env : simpy.environment
+    + event_logs : list
+    + log_event(event_type, message)
+    + collect_statistics(processes)
+    + visualize_statistics(stats, processes)
+    + visualize_process_statistics(stats, stat_type)
+    + visualize_queue_lengths(processes)
+    + visualize_gantt(processes)
+    + get_all_resources(processes)
+    + get_color_for_job(job_id)
+    }
+
+    class Manager {
+    + env : simpy.environment
+    + logger : list
+    + next_job_id : int
+    + completed_orders : list
+    + setup_processes(manager)
+    + receive_order(order)
+    + create_jobs_for_proc_build(order)
+    + create_job_for_defects()
+    + get_processes()
+    + collect_statistics()
+    }
 
     class Proc_Build {
-      + env: simpy.Environment
-      + daily_events: list
-      + printer_id : int
-      + process_id : int
-      + process_name : int
-      + printer_queue : list
-      + washing_queue : list
+    + apply_special_processing(processor, jobs)
     }
 
-    class Proc_Washing {
-      + env: simpy.Environment
-      + daily_events: list
-      + processing_time : int
-      + process_id : int
-      + process_name : int
-      + washing_queue : list
-      + drying_queue : list
-
-
+    class Proc_Wash {
     }
 
-    class Proc_Drying {
-      + env: simpy.Environment
-      + daily_events: list
-      + processing_time : int
-      + process_id : int
-      + process_name : int
-      + drying_queue : list
-      + postprocess_queue : list
-
-
+    class Proc_Dry {
     }
 
-    class Proc_PostProcessing {
-      + env: simpy.Environment
-      + daily_events: list
-      + processing_time : int
-      + process_id : int
-      + process_name : int
-      + postprocess_queue : list
-      + package_queue : list
-
-
+    class Proc_Inspect {
+    + defective_items : list
+    + apply_special_processing(processor, jobs)
     }
 
-    class Proc_Packaging {
-      + env: simpy.Environment
-      + daily_events: list
-      + processing_time : int
-      + process_id : int
-      + process_name : int
-      + package_queue : list
-      + product_list : list
-
+    class Worker_Inspect {
     }
- 
-    class BaseProcess {
-      + env : simpy.Environment
-      + daily_events : list
-      + process_id : int
-      + in_queue : list
-      + out_queue : list
-      + process_name : int
-      + process_time : int
-      + is_busy : bool
 
-      + seize()
-      + delay(job)
-      + release(job)
+    class Mach_3DPrint {
     }
-    
+
+    class Mach_Wash {
+    }
+
+    class Mach_Dry {
+    }
 
     %% 관계 표현
     Customer --> Job : creates
     Job o-- Item : contains
-    Customer --> Proc_Build : transmit
-    Proc_Build --> Proc_Washing : sends
-    Proc_Washing --> Proc_Drying : sends
-    Proc_Drying --> Proc_PostProcessing : sends
-    Proc_PostProcessing --> Proc_Packaging : sends
-    BaseProcess --> Proc_Build : inherit
-    BaseProcess --> Proc_Washing : inherit
-    BaseProcess --> Proc_Drying : inherit
-    BaseProcess --> Proc_PostProcessing : inherit
-    BaseProcess --> Proc_Packaging : inherit
+    
