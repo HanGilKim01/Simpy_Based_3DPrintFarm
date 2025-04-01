@@ -22,10 +22,7 @@ class Manager(OrderReceiver):
         # Next job ID counter
         self.next_job_id = 1
 
-        # Create and connect manufacturing processes
-        self.setup_processes()
-        #self.setup_processes()를 호출하여 제조 공정(예: Build, Wash, Dry 등)을 생성하고 연결하는 초기화 작업을 수행합니다.
-        #이후에 self.completed_orders를 빈 리스트로 초기화하여, 완료된 주문들을 저장할 공간을 마련합니다.
+ 
 
         # Tracking completed jobs and orders
         self.completed_orders = []

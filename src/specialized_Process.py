@@ -19,7 +19,7 @@ class Proc_Build(Process):
 
     def apply_special_processing(self, processor, jobs):
         """3D Printing special processing - possibility of defects"""
-        ''''
+        
         for job in jobs:
             for item in job.list_items:
                 if random.random() < DEFECT_RATE_PROC_BUILD:
@@ -42,6 +42,7 @@ class Proc_Build(Process):
             print(f"job id: {job.id_job}")
             print(f"defective job items: {[item.id_item for item in job.list_items if item.is_defect]}")
         return True
+        ''' 
 
 class Proc_Wash(Process):
     """

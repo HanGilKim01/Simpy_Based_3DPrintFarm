@@ -185,6 +185,7 @@ classDiagram
     class Mach_Dry {
     }
 
+%%{init: {"class": {"diagramMarginX": 200, "diagramMarginY": 50, "boxMargin": 20, "boxTextMargin": 10}}}%%
     %% 관계 표현
     Process <|-- Proc_Build : Inheritance
     Process <|-- Proc_Wash : Inheritance
