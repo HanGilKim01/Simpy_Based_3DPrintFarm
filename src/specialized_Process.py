@@ -65,6 +65,7 @@ class Proc_Dry(Process):
     """
 
     def __init__(self, env, logger=None):
+        
         super().__init__("Proc_Dry", env, logger)
 
         # Initialize dry machines
