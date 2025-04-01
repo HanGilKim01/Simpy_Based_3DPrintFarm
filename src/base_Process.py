@@ -1,4 +1,4 @@
-from base_Job import JobStore
+from base_Job import Stack
 from base_Processor import ProcessorResource
 
 
@@ -11,7 +11,7 @@ class Process:
         env (simpy.Environment): Simulation environment
         logger (Logger): Event logger
         list_processors (list): List of processors (Machines, Workers)
-        job_store (JobStore): Job queue management
+        job_store (Stack): Job queue management
         processor_resources (dict): Processor resources (Machine, Worker)
         completed_jobs (list): List of completed jobs
         next_process (Process): Next process in the flow
@@ -26,8 +26,8 @@ class Process:
         self.logger = logger
         self.list_processors = []  # Processor list
 
-        # Implement queue with JobStore (Inherits SimPy Store)
-        self.job_store = JobStore(env, f"{name_process}_JobStore")
+        # Implement queue with Stack (Inherits SimPy Store)
+        self.job_store = Stack(env, f"{name_process}_JobStore")
 
         # Processor resource management
         self.processor_resources = {}  # {processor_id: ProcessorResource}
@@ -82,7 +82,7 @@ class Process:
         job.time_waiting_start = self.env.now
         job.workstation["Process"] = self.name_process
 
-        # Add job to JobStore
+        # Add job to Stack
         self.job_store.put(job)
 
         # Trigger job added event
@@ -161,7 +161,7 @@ class Process:
                         #     f"[DEBUG] {self.name_process}: retrieved job {job.id_job}")
                         jobs_to_assign.append(job)
             except Exception as e:
-                # Continue if unable to get job from JobStore
+                # Continue if unable to get job from Stack
                 print(f"[ERROR] {self.name_process}: failed to get job: {e}")
 
             # Assign jobs to processor

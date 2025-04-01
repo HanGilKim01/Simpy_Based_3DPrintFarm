@@ -31,17 +31,17 @@ class Job:
         self.processing_history = []  # Will store each process step details
 
 
-class JobStore(simpy.Store):
+class Stack(simpy.Store):
     """
     Job queue management class that inherits SimPy Store
 
     Attributes:
         env (simpy.Environment): Simulation environment
-        name (str): Name of the JobStore
+        name (str): Name of the Stack
         queue_length_history (list): Queue length
     """
 
-    def __init__(self, env, name="JobStore"):
+    def __init__(self, env, name="Stack"):
         super().__init__(env)
         self.name = name
         self.queue_length_history = []  # Track queue length history

@@ -57,7 +57,7 @@ classDiagram
     + processing_history : list
     }
 
-    class JobStore {
+    class Stack {
     + name : str
     + queue_length_history : list
     + put(item)
@@ -71,7 +71,7 @@ classDiagram
     + env : simpy.environment
     + logger : list
     + list_processors : list
-    + job_store : JobStore()
+    + job_store : Stack()
     + processor_resources : dict
     + complted_jobs : list
     + next_process : None
@@ -199,10 +199,10 @@ classDiagram
     Customer --> Manager : send order
 
     Manager --> Job : Split Order into Job
-    Manager --> JobStore : send Job list
+    Manager --> Stack : send Job list
     Manager --> Proc_Build : create job for defects
 
-    Process --> JobStore : get Job list
+    Process --> Stack : get Job list
 
     ProcessorResource --> Proc_Build : offer resource
     ProcessorResource --> Proc_Wash : offer resource

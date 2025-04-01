@@ -155,7 +155,7 @@ class Manager(OrderReceiver):
         stats['inspect_completed'] = len(self.proc_inspect.completed_jobs)
 
         # Queue sizes
-        # 각 공정의 작업 큐(JobStore)의 크기(size 프로퍼티)를 조회하여, 현재 대기 중인 작업의 수를 저장합니다.
+        # 각 공정의 작업 큐(Stack)의 크기(size 프로퍼티)를 조회하여, 현재 대기 중인 작업의 수를 저장합니다.
         stats['build_queue'] = self.proc_build.job_store.size
         stats['wash_queue'] = self.proc_wash.job_store.size
         stats['dry_queue'] = self.proc_dry.job_store.size
