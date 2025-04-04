@@ -1,6 +1,8 @@
 # SimPy based 3D Print Farm
 SimPy-based Inventory Management Simultaion
 
+![Image](https://github.com/user-attachments/assets/266affa1-a168-4488-bb2c-05751d1fb3b5)
+
 # About Simulator
 * This is a company simulation that regularly takes orders from customers, prints specific products with a 3D printer, and creates the final product through a series of work processes.
 * There are four major processes involved in the work process : Build, Wash, Dry, Inspection
@@ -67,3 +69,4 @@ Every parameters in config_SimPy.py
 
 # specialized_Processor
 * Additional properties are defined for processors, which are workers and machines
+
